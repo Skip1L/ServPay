@@ -3,12 +3,12 @@
     x:Class="ServPay.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:ServPay"
     xmlns:views="clr-namespace:ServPay.Views"
     Shell.FlyoutBehavior="Disabled">
 
     <ShellContent
+        Title="ServPay"
         ContentTemplate="{DataTemplate views:LoginPage}"
-        Route="LoginPage" />
+        Route="MainPage" />
 
 </Shell>
