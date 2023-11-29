@@ -1,0 +1,44 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              xmlns:vm="clr-namespace:ServPay.View_Models"
+              x:Class="ServPay.Views.LoginPage">
+    <ContentPage.BindingContext>
+        <vm:LoginViewModel />
+    </ContentPage.BindingContext>
+    <ScrollView>
+        <VerticalStackLayout
+            Spacing="15"
+            Padding="20,0"
+            VerticalOptions="Center">
+
+            <Label Text="Welcome to ServPay" 
+                   FontSize="24"
+                   HorizontalOptions="Center" />
+
+            <Frame x:Name="Username">
+                <Entry Placeholder="Username"
+                       Text="{Binding Username}" />
+            </Frame>
+
+            <Grid>
+                <Frame x:Name="passwordFrame" Padding="10, 10, 60, 10">
+                    <Entry Placeholder="Password"
+                           IsPassword="{Binding IsPasswordHiden}"
+                           Text="{Binding Password}" />
+                </Frame>
+
+                <ImageButton Source="{Binding Image}"
+                             WidthRequest="50" HeightRequest="50" 
+                        Command="{Binding TogglePasswordCommand}"
+                             HorizontalOptions="End" Margin="5"/>
+            </Grid>
+
+            <Button Text="Log in"
+                    Command="{Binding LoginCommand}"
+                    HorizontalOptions="Center" />
+            <Button Text="Sign in" Padding="0" BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource White}}"
+                    Command="{Binding LoginCommand}"
+                    HorizontalOptions="Center" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
