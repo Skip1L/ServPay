@@ -49,14 +49,31 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
-	  <PackageReference Include="MongoDB.Driver" Version="2.22.0" />
+	  <None Remove="View-Models\MOCK_DATA%284%29.json" />
 	</ItemGroup>
 
 	<ItemGroup>
+	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+	  <PackageReference Include="FirebaseDatabase.net" Version="4.2.0" />
+	  <PackageReference Include="Google.Cloud.Firestore" Version="3.4.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Resource Include="Resources\Raw\MOCK_DATA%284%29.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Views\AccountPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\LoginPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\TransferPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
+
+	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionServPayHideInfoBar="True" /></VisualStudio></ProjectExtensions>
 
 </Project>

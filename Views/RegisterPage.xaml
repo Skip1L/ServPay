@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:ServPay.View_Models"
+             Shell.PresentationMode="ModalAnimated"
+             x:Class="ServPay.Views.RegisterPage"
+             >
+    <ContentPage.BindingContext>
+        <viewModels:RegistrationViewModel />
+    </ContentPage.BindingContext>
+    <ScrollView>
+        <VerticalStackLayout
+            Spacing="15"
+            Padding="20,0"
+            VerticalOptions="Center">
+            <Label Text="Registration" HorizontalOptions="Center" FontSize="24" FontAttributes="Bold" TextColor="{StaticResource Primary}"></Label>
+
+            <Label FontSize="24"
+                   HorizontalOptions="Center">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="" TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+
+            <Frame x:Name="Username">
+                <Entry Placeholder="Email"
+                       Text="{Binding Username}" />
+            </Frame>
+
+            <Frame x:Name="Email">
+                <Entry Placeholder="Email"
+                       Text="{Binding Email}" />
+            </Frame>
+
+            <Frame x:Name="PasswordFrame" Padding="10, 10, 60, 10">
+                <Entry Placeholder="Password"
+                       IsPassword="True"
+                       Text="{Binding Password}" />
+            </Frame>
+
+            <Frame x:Name="ConfirmPasswordFrame">
+                <Entry Placeholder="Confirm Password"
+                       IsPassword="True"
+                       Text="{Binding ConfirmPassword}" />
+            </Frame>
+            
+
+            <Button Text="Register" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource White}}" BackgroundColor="{AppThemeBinding Light={StaticResource Secondary}, Dark={StaticResource Primary}}"
+                    Command="{Binding RegisterCommand}"
+                    HorizontalOptions="Center" BorderWidth="2" BorderColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
