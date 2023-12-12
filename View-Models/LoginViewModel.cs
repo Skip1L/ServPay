@@ -1,112 +1,83 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.ComponentModel;
+
+//using Firebase.Database;
+//using Firebase.Database.Query;
+using ServPay.Services;
+using ServPay.Views;
 using System.Windows.Input;
-using Microsoft.Maui.Layouts;
-using static System.Net.WebRequestMethods;
+using ServPay.Models;
+
+#pragma warning disable MVVMTK0034
 
 namespace ServPay.View_Models
 {
-    public class LoginViewModel : INotifyPropertyChanged
+    public partial class LoginViewModel : ObservableObject
     {
-        private string username;
-        private string imageSource;
-        private string password;
-        private bool isPasswordHiden;
+        [ObservableProperty] private string _email;
 
-        public string Username
-        {
-            get { return username; }
-            set
-            {
-                if (username != value)
-                {
-                    username = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
+        [ObservableProperty] private string _imageSource;
 
-        public string Image
-        {
-            get { return imageSource; }
-            set
-            {
-                if (imageSource != value)
-                {
-                    imageSource = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
+        [ObservableProperty] private string _password;
 
-        public string Password
-        {
-            get { return password; }
-            set
-            {
-                if (password != value)
-                {
-                    password = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
+        [ObservableProperty] private bool _isPasswordHiden;
 
-        public bool IsPasswordHiden
-        {
-            get { return isPasswordHiden; }
-            set
-            {
-                if (isPasswordHiden != value)
-                {
-                    isPasswordHiden = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
+        private readonly LoginServices _loginService;
 
-        public ICommand LoginCommand { get; private set; }
-        public ICommand TogglePasswordCommand { get; private set; }
+        public ICommand LoginCommand { get; }
+        public ICommand TogglePasswordCommand { get; }
+        public ICommand SignInCommand { get; }
 
         public LoginViewModel()
         {
-            LoginCommand = new Command(OnLogin);
+            _loginService = new LoginServices();
+            SignInCommand = new Command(OnSignIn);
+            LoginCommand = new Command(OnLoginAsync);
             TogglePasswordCommand = new Command(OnTogglePassword);
-            isPasswordHiden = true;
-            imageSource = "noevilmonkey94.png";
+            IsPasswordHiden = true;
+            ImageSource = "noevilmonkey94.png";
         }
 
-        private void OnLogin()
+        private static async void OnSignIn()
         {
-            // Handle login logic here
+            await Shell.Current.GoToAsync(nameof(RegisterPage), true);
+        }
+
+        private async void OnLoginAsync()
+        {
+            try
+            {
+                if (!_loginService.IsUserExist(Email, Password))
+                    throw new ArgumentException("Incorrect email or password");
+                var cards = _loginService.GetCardsByUserId(_loginService.GetUserId(Email));
+                var user = _loginService.GetUserById(_loginService.GetUserId(Email));
+                var transactionHistory = _loginService.GetTransactionsByUserId(user.Id);
+                //var transactionHistory = new ObservableCollection<TransactionDetails>();
+                var navigationParameter = new Dictionary<string, object>
+                {
+                    {"_email", Email},
+                    {"_cards", cards},
+                    {"_user", user},
+                    {"_transactionHistory", transactionHistory}
+
+                };
+                await Shell.Current.GoToAsync($"{nameof(AccountPage)}", true, navigationParameter);
+                
+            }
+            catch (Exception ex)
+            {
+                await Application.Current!.MainPage!.DisplayAlert("Error", ex.Message, "OK");
+            }
+            Email = "";
+            Password = "";
         }
 
         private void OnTogglePassword()
         {
             IsPasswordHiden = !IsPasswordHiden;
-            Image= IsPasswordHiden
+            ImageSource = IsPasswordHiden
                 ? "noevilmonkey94.png"
                 : "monkeyface94.png";
-
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        private async Task LoginAsync()
-        {
-            // Perform login logic here
-            // If login is successful, navigate to the next page
-            //await Application.Current.MainPage.Navigation.PushAsync();
         }
     }
 }

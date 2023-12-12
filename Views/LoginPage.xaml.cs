@@ -6,7 +6,6 @@ public partial class LoginPage : ContentPage
 {
 	public LoginPage()
     {
-        //Title = "LoginPage";
 
         BindingContext = new LoginViewModel();
 

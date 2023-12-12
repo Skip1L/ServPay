@@ -21,9 +21,9 @@
                 </Label.FormattedText>
             </Label>
 
-            <Frame x:Name="Username">
-                <Entry Placeholder="Username"
-                       Text="{Binding Username}" />
+            <Frame x:Name="Email">
+                <Entry Placeholder="Email"
+                       Text="{Binding Email}" />
             </Frame>
 
             <Grid>
@@ -43,7 +43,7 @@
                     Command="{Binding LoginCommand}"
                     HorizontalOptions="Center" BorderWidth="2" BorderColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}" />
             <Button Text="Sign in" TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource White}}" Padding="10" Margin="0,-10,0,0" BackgroundColor="Transparent"
-                    Command="{Binding LoginCommand}"
+                    Command="{Binding SignInCommand }" 
                     HorizontalOptions="Center"/>
         </VerticalStackLayout>
     </ScrollView>
