@@ -361,3 +361,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/Resources/Raw/MOCK_DATA(4).json
+/Resources/Raw/MOCK_DATA(7).json
