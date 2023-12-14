@@ -22,8 +22,9 @@
                                HasShadow="True"
                                HeightRequest="170"
                                WidthRequest="300"
+                               Margin="10"
                                BackgroundColor="{AppThemeBinding Light={StaticResource Secondary}, Dark={StaticResource Gray600}}">
-                            <Grid RowSpacing="10" ColumnSpacing="10">
+                            <Grid RowSpacing="10" ColumnSpacing="10" >
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*" />
                                     <RowDefinition Height="*" />
